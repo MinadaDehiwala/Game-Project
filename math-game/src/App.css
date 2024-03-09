@@ -28,6 +28,11 @@
     height: 100vh; /* Adjust the height of the container */
 }
 
+body {
+    overflow: hidden; /* Hide both horizontal and vertical scrollbars */
+  }
+  
+
 
 
   

@@ -1,53 +1,42 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import 'bootstrap/dist/css/bootstrap.min.css';
+// Login.jsx
+import React from "react";
+import { motion } from "framer-motion";
 import './Signup.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Link } from 'react-router-dom';
 
-
-function Signup() {
+function Login() {
   return (
-    
-    <div className='signup template d-flex justify-content-center align-items-center vh-100'>
-      
+    <motion.div
+      initial={{ opacity: 0, y:2000 }}
+      animate={{ opacity: 1, y: 30 }}
+      exit={{ opacity: 0, y: -50 }}
+      transition={{ duration: 0.5 }} // Adjust the duration as needed
+      className='login template d-flex justify-content-center align-items-center'
+    >
       <div className="form_container p-5 rounded bg-white">
         <form>
-          <h2 className="text-center">Sign-Up</h2>
-
-          <div className="mb-2">
-            <label htmlFor="name">Name</label>
-            <input
-              type="email"
-              placeholder="Enter Your Name" 
-              className="form-control"
-            />
-            </div>
-          <div className="mb-2">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              placeholder="Enter Email" 
-              className="form-control"
-            />
+          <h1 className="text-center mb-4">Sign Up</h1>
+          <div className="mb-3">
+            <label htmlFor="email" className="form-label">Email</label>
+            <input type="email" className="form-control" id="email" placeholder="Enter Email" />
           </div>
-          <div className="mb-2">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              placeholder="Enter Password"
-              className="form-control"
-            />
+          <div className="mb-3">
+            <label htmlFor="password" className="form-label">Password</label>
+            <input type="password" className="form-control" id="password" placeholder="Enter Password" />
           </div>
-          <div className="d-grid">
-            <button className="btn btn-primary">Sign In</button>  
+          <div className="mb-3">
+            <label htmlFor="password" className="form-label">Confirm Password</label>
+            <input type="password" className="form-control" id="password" placeholder="Enter Password" />
           </div>
-          <p className="text-end mt-2">
-            Already have an Account? <Link to="/" className="mt-2">Sign-In</Link>
+          <button type="submit" className="btn btn-primary d-block w-100 mb-3">Sign Up</button>
+          <p className="text-end">
+            Already have an account? <Link to="/" className="mt-2">Sign-In</Link>
           </p>
         </form>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
-export default Signup;
+export default Login;

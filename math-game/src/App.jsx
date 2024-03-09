@@ -7,11 +7,16 @@ import Signup from './components/LoginSignup/Signup';
 import backgroundImage from './assets/Background.png'; // Import the background image
 import './App.css';
 
+import Title from './components/LoginSignup/GameTitle'; // Import the GameTitle component
+
+
 function App() {
   return (
     <BrowserRouter>
       <div className="app-background" style={{ backgroundImage: `url(${backgroundImage})` }}>
+      <Title />
         <Routes>
+          
           <Route path="/" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>
