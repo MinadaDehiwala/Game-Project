@@ -6,8 +6,7 @@
     background-color: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(10px) brightness(70%) contrast(90%);
     max-height: 80vh; /* Limit height to 80% of viewport height */
-    overflow-y: auto; /* Add vertical scroll if content exceeds container height */
-    display: flex;
+   
     justify-content: center;
     align-items: center;
   }

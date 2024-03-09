@@ -1,11 +1,19 @@
+// Login.jsx
 import React from "react";
+import { motion } from "framer-motion";
 import './Login.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
 
 function Login() {
   return (
-    <div className='login template d-flex justify-content-center align-items-center'>
+    <motion.div
+      initial={{ opacity: 0, y: 2000 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -50 }}
+      transition={{ duration: 0.5 }} // Adjust the duration as needed
+      className='login template d-flex justify-content-center align-items-center'
+    >
       <div className="form_container p-5 rounded bg-white">
         <form>
           <h1 className="text-center mb-4">Login In</h1>
@@ -23,7 +31,7 @@ function Login() {
           </p>
         </form>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
