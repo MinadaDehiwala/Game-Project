@@ -1,0 +1,70 @@
+/* Game.css */
+.game-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 100px;
+    height: 100vh;
+  }
+  
+  .game-box {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+  }
+  
+  .level {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  
+  .timer {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .question-image {
+    max-width: 100%;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .answer-label {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  
+  .answer-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+  
+  .submit-button {
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .message {
+    font-size: 1.2rem;
+    margin-top: 20px;
+  }
+  
+  .main-menu-button {
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+
