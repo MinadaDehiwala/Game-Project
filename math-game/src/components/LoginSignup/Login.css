@@ -1,15 +1,90 @@
-.form_container{
-    width: 30%;
+.form_container {
+    width: 60%;
+    max-width: 800px;
+    margin: 10vh auto; /* Adjust margin to vertically center */
+    padding: 40px;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px) brightness(70%) contrast(90%);
+    max-height: 80vh; /* Limit height to 80% of viewport height */
+    overflow-y: auto; /* Add vertical scroll if content exceeds container height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  @media screen and (max-width: 1000px) {
+    .form_container {
+      width: 70%;
+    }
+  }
+  
+  @media screen and (max-width: 700px) {
+    .form_container {
+      width: 80%;
+    }
+  }
+  
+  .login.template {
+    background-size: cover; /* Ensure the background image covers the entire container */
+    background-position: center;
+    background-attachment: fixed; /* Ensure the background image remains fixed in the viewport */
+    height: 100vh; /* Set the height of the container to match the viewport height */
+
+  }
+  
+  /* Increase font size for all text inside the form */
+  .form_container * {
+    font-size: 2rem; 
+    /* Adjust the font size as needed */
+  }
+  
+  /* Increase padding for input fields and buttons */
+  .form_container input[type="email"],
+  .form_container input[type="password"],
+  .form_container button {
+    padding: 12px 20px; /* Adjust padding as needed */
+  }
+  
+  /* Increase margin for form labels */
+  .form_container label {
+    margin-bottom: 10px; /* Adjust margin as needed */
+  }
+
+  .form_container h1 {
+    font-size: 2.5rem; /* Adjust the font size as needed */
+  }
+  
+  /* App.css */
+/* Add global styles */
+.login-container,
+.signup-container {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out; /* Add transition for opacity */
 }
 
-@media screen and (max-width: 1000px) {
-    .form-container{
-        width: 25%;
-    }    
+/* Hide the container initially */
+.login-container,
+.signup-container {
+  opacity: 0;
 }
 
-@media screen and (max-width: 700px) {
-    .form-container{
-        width: 45%;
-    }    
+/* Show the container when active */
+.login-container.active,
+.signup-container.active {
+  opacity: 1;
 }
+
+/* Login.css */
+.login-container {
+    position: absolute;
+    top: 50%; /* Position the container vertically at the center */
+    left: 50%; /* Position the container horizontally at the center */
+    transform: translate(-50%, -50%); /* Center the container using transform */
+    width: 60%; /* Adjust the width as needed */
+    max-width: 400px; /* Set a maximum width for the container */
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+  }
+  
+  

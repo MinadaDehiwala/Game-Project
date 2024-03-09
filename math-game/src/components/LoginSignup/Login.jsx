@@ -3,41 +3,26 @@ import './Login.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
 
-
-
 function Login() {
   return (
-    <div className='login template d-flex justify-content-center align-items-center vh-100 bg-primary'>
-      
+    <div className='login template d-flex justify-content-center align-items-center'>
       <div className="form_container p-5 rounded bg-white">
         <form>
-          <h2 className="text-center ">Login In</h2>
-          <div className="mb-2">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              placeholder="Enter Email"
-              className="form-control"
-            />
+          <h1 className="text-center mb-4">Login In</h1>
+          <div className="mb-3">
+            <label htmlFor="email" className="form-label">Email</label>
+            <input type="email" className="form-control" id="email" placeholder="Enter Email" />
           </div>
-          <div className="mb-2">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              placeholder="Enter Password"
-              className="form-control"
-            />
+          <div className="mb-3">
+            <label htmlFor="password" className="form-label">Password</label>
+            <input type="password" className="form-control" id="password" placeholder="Enter Password" />
           </div>
-          <div className="d-grid">
-            <button className="btn btn-primary">Sign In</button>  
-          </div>
-          <p className="text-end mt-2">
-  No Account? <Link to="/signup" className="mt-2">Sign-Up</Link>
-</p>
-          </form>
-
+          <button type="submit" className="btn btn-primary d-block w-100 mb-3">Sign In</button>
+          <p className="text-end">
+            No Account? <Link to="/signup" className="mt-2">Sign-Up</Link>
+          </p>
+        </form>
       </div>
-     
     </div>
   );
 }
