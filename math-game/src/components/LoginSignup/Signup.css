@@ -3,7 +3,7 @@
   max-width: 800px;
   margin: 10vh auto; /* Adjust margin to vertically center */
   padding: 40px;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(16, 16, 16, 0.1);
   backdrop-filter: blur(10px) brightness(70%) contrast(90%);
   max-height: 80vh; /* Limit height to 80% of viewport height */
   justify-content: center;
@@ -72,18 +72,7 @@ opacity: 0;
 opacity: 1;
 }
 
-/* Login.css */
-.login-container {
-  position: absolute;
-  top: 50%; /* Position the container vertically at the center */
-  left: 50%; /* Position the container horizontally at the center */
-  transform: translate(-50%, -50%); /* Center the container using transform */
-  width: 60%; /* Adjust the width as needed */
-  max-width: 400px; /* Set a maximum width for the container */
-  padding: 20px;
-  background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 10px;
-}
+
 
 .form_container h1 {
   font-size: 3rem; /* Adjust the font size as needed */
