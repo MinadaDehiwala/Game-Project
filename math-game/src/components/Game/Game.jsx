@@ -98,7 +98,7 @@ const Game = () => {
           <button type="submit" className="submit-button">Submit</button>
         </form>
         {message && <div className="message">{message}</div>}
-        <button className="main-menu-button" onClick={() => window.location.href="/menu"}>Main Menu</button>
+        <button className="main-menu-button" onClick={() => window.location.href="/menu"} style={{ marginTop: '20px' }}>Main Menu</button>
       </div>
     </motion.div>
   );

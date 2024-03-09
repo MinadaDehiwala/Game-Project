@@ -9,6 +9,8 @@ import Login from './components/LoginSignup/Login';
 import Menu from './components/Menus/Menu-Page';
 import Game from './components/Game/Game';
 import Profile from './components/Profiles/profile';
+import Leaderboard from './components/Leaderboards/Score-Chart';
+
 
 
 
@@ -24,7 +26,7 @@ function App() {
         <Route path="/menu" element={<Menu />} />
         <Route path="/game" element={<Game />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/leaderboard" element={<leaderboard />} />
+        <Route path="/leaderboard" element={<Leaderboard />} />
 
 
           <Route path="/" element={<Login />} />

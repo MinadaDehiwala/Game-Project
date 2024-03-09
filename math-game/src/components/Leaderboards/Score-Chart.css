@@ -1,0 +1,56 @@
+/* Leaderboard.css */
+.leaderboard-container {
+  width: 20%;
+  margin: 0 auto;
+  padding-top: 250px;
+}
+
+.leaderboard-title {
+  font-size: 60px;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #ffff;
+}
+
+.leaderboard-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.leaderboard-entry {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: white; /* Set background color to white */
+  border-radius: 5px;
+}
+
+.column-title {
+  font-weight: bold;
+}
+
+.player-name,
+.player-score {
+  flex: 1;
+  text-align: center;
+}
+
+.leaderboard-container .column-title {
+padding-right: 60px;
+padding-left: 30px;
+}
+
+.main-menu-button {
+  position: relative;
+  top: 30px;
+  text-decoration: none;
+
+}
+
+.back-to-main-menu {
+  text-decoration: none; /* Remove underline */
+  color: inherit; /* Inherit the color from its parent */
+}
+
