@@ -7,3 +7,14 @@ export default {
   plugins: [],
 }
 
+// tailwind.config.js
+
+module.exports = {
+  theme: {
+    extend: {
+      fontFamily: {
+        techno: ['Techno Hideo', 'sans-serif'],      },
+    },
+  },
+  // Other Tailwind CSS configurations...
+};
