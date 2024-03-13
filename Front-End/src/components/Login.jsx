@@ -2,15 +2,21 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { MDBContainer, MDBCard, MDBCardBody, MDBInput } from 'mdb-react-ui-kit';
 import { motion } from 'framer-motion';
+import axios from 'axios'; // Import axios for making HTTP requests
 
 function Login() {
+  const handleLogin = () => {
+    // Perform login logic here
+    // You can send a request to your backend server to handle login
+  };
+
   return (
     <MDBContainer fluid className='d-flex align-items-center justify-content-center' style={{ minHeight: '100vh' }}>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 2 }}
-        style={{ width: '100%', display: 'flex', justifyContent: 'center', marginTop: '-40vh' }} // Adjust margin-top to move content up
+        style={{ width: '100%', display: 'flex', justifyContent: 'center', marginTop: '-40vh' }} 
       >
         <MDBCard className='m-5' style={{ width: '100%', maxWidth: '600px', backgroundColor: 'rgba(255, 255, 255, 0.8)', borderRadius: '15px', padding: '20px' }}>
           <MDBCardBody className='px-5'>
@@ -26,7 +32,7 @@ function Login() {
             <p className="text-center mb-0" style={{ fontSize: '1.125rem' }}>Don't have an account? <Link to="/signup" style={{ fontWeight: 'bold', color: '#000' }}>Sign Up</Link></p>
 
             <div className='d-flex justify-content-between align-items-center mb-4'>
-              <button type="button" className="btn btn-success w-100">Login</button>
+              <button type="button" className="btn btn-success w-100" onClick={handleLogin}>Login</button>
             </div>
           </MDBCardBody>
         </MDBCard>
