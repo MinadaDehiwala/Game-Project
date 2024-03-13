@@ -6,15 +6,22 @@ import axios from 'axios';
 
 function Signup() {
   const [formData, setFormData] = useState({
-    username: '',
+    name: '',
     email: '',
     password: '',
     confirmPassword: ''
   });
 
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
+
   const handleSignup = () => {
-    // Send signup data to the backend server
-    axios.post('/signup', formData)
+    axios.post('http://localhost:3000/signup', formData)
       .then(response => {
         console.log(response.data);
         // Handle success or show a message to the user
@@ -38,20 +45,20 @@ function Signup() {
           <MDBCardBody className='px-5'>
             <h2 className="text-uppercase text-center mb-5">Create an account</h2>
             <div className="mb-4">
-              <label htmlFor="form1" className="form-label" style={{ fontSize: '1.5rem' }}>Your Name</label>
-              <MDBInput wrapperClass='mb-4' size='lg' id='form1' type='text' placeholder="Your Name" onChange={(e) => setFormData({ ...formData, username: e.target.value })}/>
+              <label htmlFor="username" className="form-label" style={{ fontSize: '1.5rem' }}>Your Name</label>
+              <MDBInput wrapperClass='mb-4' size='lg' id='name' type='text' placeholder="Enter Your Name" name="name" value={formData.name} onChange={handleChange}/>
             </div>
             <div className="mb-4">
-              <label htmlFor="form2" className="form-label" style={{ fontSize: '1.5rem' }}>Your Email</label>
-              <MDBInput wrapperClass='mb-4' size='lg' id='form2' type='email' placeholder="Your Email" onChange={(e) => setFormData({ ...formData, email: e.target.value })}/>
+              <label htmlFor="email" className="form-label" style={{ fontSize: '1.5rem' }}>Your Email</label>
+              <MDBInput wrapperClass='mb-4' size='lg' id='email' type='email' placeholder="Your Email" name="email" value={formData.email} onChange={handleChange}/>
             </div>
             <div className="mb-4">
-              <label htmlFor="form3" className="form-label" style={{ fontSize: '1.5rem' }}>Password</label>
-              <MDBInput wrapperClass='mb-4' size='lg' id='form3' type='password' placeholder="Password" onChange={(e) => setFormData({ ...formData, password: e.target.value })}/>
+              <label htmlFor="password" className="form-label" style={{ fontSize: '1.5rem' }}>Password</label>
+              <MDBInput wrapperClass='mb-4' size='lg' id='password' type='password' placeholder="Password" name="password" value={formData.password} onChange={handleChange}/>
             </div>
             <div className="mb-4">
-              <label htmlFor="form4" className="form-label" style={{ fontSize: '1.5rem' }}>Repeat your password</label>
-              <MDBInput wrapperClass='mb-4' size='lg' id='form4' type='password' placeholder="Repeat your password" onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}/>
+              <label htmlFor="confirmPassword" className="form-label" style={{ fontSize: '1.5rem' }}>Confirm Password</label>
+              <MDBInput wrapperClass='mb-4' size='lg' id='confirmPassword' type='password' placeholder="Confirm Password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange}/>
             </div>
     
             <button type="button" className="btn btn-success w-100" onClick={handleSignup}>Sign Up</button>
