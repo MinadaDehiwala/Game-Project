@@ -1,13 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MDBContainer, MDBCard, MDBCardBody, MDBInput } from 'mdb-react-ui-kit';
 import { motion } from 'framer-motion';
 import axios from 'axios'; // Import axios for making HTTP requests
 
 function Login() {
+  const [values, setValues] = useState({ email: '', password: '' }); // Define the values state variable
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setValues(prevValues => ({
+      ...prevValues,
+      [name]: value
+    }));
+  };
+
   const handleLogin = () => {
-    // Perform login logic here
-    // You can send a request to your backend server to handle login
+    axios.post('http://localhost:3000/validatePassword', values)
+      .then(res => {
+        if (res.data.validation) {
+          alert('Password is Correct!');
+        } else {
+          alert('Incorrect Password!');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while logging in.');
+      });
+   
+
+
   };
 
   return (
@@ -23,11 +46,11 @@ function Login() {
             <h2 className="font-bold text-center" style={{ fontSize: '2.875rem', marginBottom: '2.25rem' }}>Login</h2>
             <div className="mb-4">
               <label htmlFor="email" className="form-label" style={{ fontSize: '1.5rem' }}>Your Email</label>
-              <MDBInput wrapperClass='mb-4' size='lg' id='form1' type='email' placeholder="Enter your email"/>
+              <MDBInput wrapperClass='mb-4' size='lg' id='form1' type='email' name='email' value={values.email} onChange={handleChange} placeholder="Enter your email"/>
             </div>
             <div className="mb-4">
               <label htmlFor="password" className="form-label" style={{ fontSize: '1.5rem' }}>Password</label>
-              <MDBInput wrapperClass='mb-4' size='lg' id='form2' type='password' placeholder="Enter your password"/>
+              <MDBInput wrapperClass='mb-4' size='lg' id='form2' type='password' name='password' value={values.password} onChange={handleChange} placeholder="Enter your password"/>
             </div>
             <p className="text-center mb-0" style={{ fontSize: '1.125rem' }}>Don't have an account? <Link to="/signup" style={{ fontWeight: 'bold', color: '#000' }}>Sign Up</Link></p>
 
