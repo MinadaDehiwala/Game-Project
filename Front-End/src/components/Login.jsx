@@ -16,7 +16,7 @@ function Login() {
   };
 
   const handleLogin = () => {
-    axios.post('http://localhost:3000/validatePassword', values)
+    axios.post('http://localhost:3000/validatePassword', values, { withCredentials: true })
       .then(res => {
         if (res.data.validation) {
           alert('Password is Correct!');
@@ -28,6 +28,7 @@ function Login() {
         console.error('Error:', error);
         alert('An error occurred while logging in.');
       });
+
    
 
 
