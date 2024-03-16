@@ -133,7 +133,9 @@ const Game = () => {
     } else {
       handleWrongAnswer();
     }
+    clearInterval(countdownRef.current); // Clear the interval when the user submits an answer
   };
+  
 
   const handleTimeOut = async () => {
     try {
@@ -165,17 +167,19 @@ const Game = () => {
         confirmButtonColor: "#3085d6",
         confirmButtonText: "Try Again",
       });
-
+  
       if (result.isConfirmed) {
         setLevel(1);
         setScore(0);
         setShowSadRain(true);
         setTimeout(() => setShowSadRain(false), 5000); // Hide sad rain after 5 seconds
+        fetchQuestion(); // Fetch a new question for level 1
       }
     } catch (error) {
       console.error("Error displaying SweetAlert2:", error);
     }
   };
+  
 
   const calculateScore = () => {
     const timeRemaining = timer;
