@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { MDBContainer, MDBCard, MDBCardBody, MDBInput } from 'mdb-react-ui-kit';
 import { motion } from 'framer-motion';
 import axios from 'axios';
@@ -11,6 +11,7 @@ function Signup() {
     password: '',
     confirmPassword: ''
   });
+  const navigate = useNavigate(); // Get the navigation function
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -20,16 +21,14 @@ function Signup() {
     }));
   };
 
-  const handleSignup = () => {
-    axios.post('http://localhost:3000/signup', formData)
-      .then(response => {
-        console.log(response.data);
-        // Handle success or show a message to the user
-      })
-      .catch(error => {
-        console.error('Error signing up:', error);
-        // Handle error or show a message to the user
-      });
+  const handleSignup = async () => {
+    try {
+      const res = await axios.post('http://localhost:3000/signup', formData);
+      navigate('/'); // Navigate to login on successful signup
+    } catch (error) {
+      console.error('Error signing up:', error);
+      // Handle error or show a message to the user
+    }
   };
 
   return (
@@ -67,7 +66,7 @@ function Signup() {
         </MDBCard>
       </motion.div>
     </MDBContainer>
-  );
+      );
 }
 
 export default Signup;

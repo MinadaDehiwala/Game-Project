@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 
 function Menu() {
@@ -19,6 +19,11 @@ function Menu() {
             <Link to="/profile"><Button variant="primary" className="w-100 mb-3 fs-3">My Profile</Button></Link>
             <Link to="/game"><Button variant="primary" className="w-100 mb-3 fs-3">Play</Button></Link>
             <Link to="/leaderboard"><Button variant="primary" className="w-100 mb-3 fs-3">Leaderboard</Button></Link>
+            <Link to="/howtoplay">
+              <Button variant="primary" className="w-100 mb-3 fs-3">
+                How to play
+              </Button>
+            </Link>
             <Link to="/"><Button variant="primary" className="w-100 mb-3 fs-3">Exit/LogOut</Button></Link>
           </Col>
         </Row>
