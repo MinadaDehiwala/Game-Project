@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { MDBContainer, MDBCard, MDBCardBody, MDBInput } from 'mdb-react-ui-kit';
 import { motion } from 'framer-motion';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 function Signup() {
   const [formData, setFormData] = useState({
@@ -11,7 +12,7 @@ function Signup() {
     password: '',
     confirmPassword: ''
   });
-  const navigate = useNavigate(); // Get the navigation function
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -24,10 +25,23 @@ function Signup() {
   const handleSignup = async () => {
     try {
       const res = await axios.post('http://localhost:3000/signup', formData);
-      navigate('/'); // Navigate to login on successful signup
+      Swal.fire({
+        icon: 'success',
+        title: 'Signup Successful',
+        text: 'Your account has been created. You will be redirected to the login page.',
+        showConfirmButton: false,
+        timer: 2000
+      }).then(() => {
+        navigate('/');
+      });
     } catch (error) {
       console.error('Error signing up:', error);
-      // Handle error or show a message to the user
+      Swal.fire({
+        icon: 'error',
+        title: 'Signup Failed',
+        text: 'There was an error creating your account. Please try again.',
+        confirmButtonText: 'OK'
+      });
     }
   };
 

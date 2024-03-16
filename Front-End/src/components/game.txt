@@ -343,3 +343,51 @@ const Game = () => {
 };
 
 export default Game;
+
+
+
+
+
+├── Back-End
+│   ├── Middleware
+│   │   └── JWT.js
+│   ├── database.db
+│   ├── package-lock.json
+│   ├── package.json
+│   └── server.js
+└── Front-End
+    ├── README.md
+    ├── database.db
+    ├── index.html
+    ├── package-lock.json
+    ├── package.json
+    ├── public
+    │   └── vite.svg
+    ├── src
+    │   ├── App.css
+    │   ├── App.jsx
+    │   ├── assets
+    │   │   ├── Background.png
+    │   │   ├── confetti.mp3
+    │   │   ├── mute.svg
+    │   │   ├── react.svg
+    │   │   └── unmute.svg
+    │   ├── components
+    │   │   ├── Game
+    │   │   │   ├── GameContainer.jsx
+    │   │   │   ├── GameLogic.jsx
+    │   │   │   ├── GameUI.jsx
+    │   │   │   └── api.jsx
+    │   │   ├── Game.jsx
+    │   │   ├── GameTitle.jsx
+    │   │   ├── HowToPlay.jsx
+    │   │   ├── Login.jsx
+    │   │   ├── Menu-Page.jsx
+    │   │   ├── Score-Chart.jsx
+    │   │   ├── Signup.jsx
+    │   │   ├── game.txt
+    │   │   └── profile.jsx
+    │   ├── index.css
+    │   └── main.jsx
+    ├── tailwind.config.js
+    └── vite.config.js

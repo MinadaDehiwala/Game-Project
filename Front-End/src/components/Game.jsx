@@ -158,28 +158,28 @@ const Game = () => {
     }
   };
 
-  const handleWrongAnswer = async () => {
-    try {
-      const result = await Swal.fire({
-        title: "Oops...",
-        text: "Incorrect answer. Try again from Level 1.",
-        icon: "error",
-        confirmButtonColor: "#3085d6",
-        confirmButtonText: "Try Again",
-      });
-  
-      if (result.isConfirmed) {
-        setLevel(1);
-        setScore(0);
-        setShowSadRain(true);
-        setTimeout(() => setShowSadRain(false), 5000); // Hide sad rain after 5 seconds
-        fetchQuestion(); // Fetch a new question for level 1
-      }
-    } catch (error) {
-      console.error("Error displaying SweetAlert2:", error);
+ const handleWrongAnswer = async () => {
+  try {
+    const result = await Swal.fire({
+      title: "Oops...",
+      text: "Incorrect answer. Try again from Level 1.",
+      icon: "error",
+      confirmButtonColor: "#3085d6",
+      confirmButtonText: "Try Again",
+    });
+
+    if (result.isConfirmed) {
+      setLevel(1);
+      setScore(0);
+      setShowSadRain(true);
+      setTimeout(() => setShowSadRain(false), 5000); // Hide sad rain after 5 seconds
+      fetchQuestion(); // Fetch a new question for level 1
     }
-  };
-  
+  } catch (error) {
+    console.error("Error displaying SweetAlert2:", error);
+  }
+};
+
 
   const calculateScore = () => {
     const timeRemaining = timer;

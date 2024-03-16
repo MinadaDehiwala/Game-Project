@@ -30,7 +30,7 @@ const HowToPlay = () => {
                 <p>Type your answer in the input field and click the "Submit" button to submit your answer.</p>
               </li>
               <li>
-                <p>If your answer is correct, you'll proceed to the next level and earn a point. If your answer is incorrect, you'll have to restart from level 1.</p>
+                <p>If your answer is correct, you'll proceed to the next level and earn points. If your answer is incorrect, you'll have to restart from level 1.</p>
               </li>
               <li>
                 <p>If the time runs out before you submit an answer, you'll have to restart from level 1.</p>

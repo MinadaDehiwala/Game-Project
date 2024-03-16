@@ -1,17 +1,15 @@
-// Importing JWT for token creation
+// JWT.js
 const { sign, verify } = require("jsonwebtoken");
 
-// Function to generate tokens
 const generateTokens = (user) => {
     const accessToken = sign(
-        { email: user.email }, // Define token content
+        { email: user.email },
         "minadahatetomatoes",
     );
 
     return accessToken;
 }
 
-// Middleware to validate user's token
 const checkTokenValidity = (req, res, next) => {
     const accessToken = req.cookies["access-token"]
 
@@ -23,8 +21,8 @@ const checkTokenValidity = (req, res, next) => {
         const decodedToken = verify(accessToken, "minadahatetomatoes")
         if (decodedToken) {
             req.email = decodedToken.email;
-            req.authenticated = true; // Accessible flag for middleware usage
-            return next() // Proceed to next middleware
+            req.authenticated = true;
+            return next()
         }
     } catch (e) {
         return res.status(400).json({ error: "Token validation error on server" })
