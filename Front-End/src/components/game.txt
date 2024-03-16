@@ -12,8 +12,6 @@ import axios from "axios";
 import ReactConfetti from "react-confetti";
 import Swal from "sweetalert2";
 import YouTube from "react-youtube";
-import Button from 'react-bootstrap/Button';
-
 
 const Game = () => {
   const [level, setLevel] = useState(1);
@@ -238,13 +236,14 @@ const Game = () => {
           <MDBCardBody className="px-5">
             <div className="d-flex justify-content-between align-items-center mb-3">
               <h1 className="level text-center">Level {level}</h1>
-              <Button
-  variant="outline-secondary"
-  onClick={toggleMute}
-  style={{ fontSize: "1.2rem" }}
->
-  {isMuted ? "Unmute Sounds" : "Mute Sounds"}
-</Button>
+              <MDBBtn
+                outline
+                color="secondary"
+                onClick={toggleMute}
+                style={{ fontSize: "1.2rem" }}
+              >
+                {isMuted ? "Unmute Sounds" : "Mute Sounds"}
+              </MDBBtn>
             </div>
             <div
               className="timer"
