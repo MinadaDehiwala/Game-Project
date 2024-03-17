@@ -160,4 +160,21 @@ app.post('/signup', (req, res) => {
     });
   });
 
-app.listen(3000, () => console.log('Listening at port 3000'));
+  app.post('/logout', (req, res) => {
+    try {
+      // Clear the access-token cookie by setting an expired date in the past
+      res.clearCookie('access-token', {
+        httpOnly: true,
+        sameSite: 'strict',
+        path: '/',
+      });
+      res.status(200).json({ message: 'Logout successful' });
+    } catch (err) {
+      console.error('Error during logout:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
+  const port = process.env.PORT || 3000;
+  app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+  });

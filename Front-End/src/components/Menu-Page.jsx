@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Container, Button, makeStyles } from '@material-ui/core';
+import styled from 'styled-components';
+import axios from 'axios'; // Import axios
+
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,12 +33,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 function Menu() {
   const classes = useStyles();
   const [userName, setUserName] = useState('');
 
   useEffect(() => {
     fetchUserName();
+
   }, []);
 
   const fetchUserName = async () => {
@@ -51,6 +57,26 @@ function Menu() {
       }
     } catch (error) {
       console.error('Error fetching user name:', error);
+    }
+  };
+
+
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/logout', {
+        method: 'POST',
+        credentials: 'include',
+      });
+  
+      if (response.ok) {
+        // Logout successful, navigate to the login page
+        window.location.href = '/';
+      } else {
+        console.error('Failed to logout');
+      }
+    } catch (error) {
+      console.error('Error during logout:', error);
     }
   };
 
@@ -85,11 +111,18 @@ function Menu() {
           </Button>
         </Link>
         <Link to="/">
-          <Button className={classes.button} variant="contained" color="primary" fullWidth>
-            Exit/LogOut
-          </Button>
-        </Link>
+      <Button
+        className={classes.button}
+        variant="contained"
+        color="primary"
+        fullWidth
+        onClick={handleLogout}
+      >
+        Exit/LogOut
+      </Button>
+    </Link>
       </Container>
+    
     </motion.div>
   );
 }
