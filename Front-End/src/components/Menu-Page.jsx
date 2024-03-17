@@ -1,10 +1,36 @@
-// Menu-Page.jsx
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { Link, useNavigate } from 'react-router-dom';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { Container, Button, makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '50vh',
+  },
+  container: {
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    borderRadius: '15px',
+    padding: '20px',
+    maxWidth: '500px',
+    marginTop: '100px',
+  },
+  title: {
+    fontSize: '2.875rem',
+    marginBottom: '2.25rem',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  button: {
+    marginBottom: theme.spacing(2),
+    fontSize: '1.2rem',
+  },
+}));
 
 function Menu() {
+  const classes = useStyles();
   const [userName, setUserName] = useState('');
 
   useEffect(() => {
@@ -34,23 +60,35 @@ function Menu() {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -50 }}
       transition={{ duration: 1 }}
-      className='login template d-flex justify-content-center align-items-center'
+      className={classes.root}
     >
-      <Container className="p-4 rounded" style={{ maxWidth: '500px', marginTop:'100px', backgroundColor: 'rgba(255, 255, 255, 0.3)' }}>
-        <Row className="justify-content-center align-items-center">
-          <Col md="12">
-            <h1 className="text-center mb-4 display-4">Welcome, {userName}!</h1>
-            <Link to="/profile"><Button variant="primary" className="w-100 mb-3 fs-3">My Profile</Button></Link>
-            <Link to="/game"><Button variant="primary" className="w-100 mb-3 fs-3">Play</Button></Link>
-            <Link to="/leaderboard"><Button variant="primary" className="w-100 mb-3 fs-3">Leaderboard</Button></Link>
-            <Link to="/howtoplay">
-              <Button variant="primary" className="w-100 mb-3 fs-3">
-                How to play
-              </Button>
-            </Link>
-            <Link to="/"><Button variant="primary" className="w-100 mb-3 fs-3">Exit/LogOut</Button></Link>
-          </Col>
-        </Row>
+      <Container className={classes.container}>
+        <h1 className={classes.title}>Welcome, {userName}!</h1>
+        <Link to="/profile">
+          <Button className={classes.button} variant="contained" color="primary" fullWidth>
+            My Profile
+          </Button>
+        </Link>
+        <Link to="/game">
+          <Button className={classes.button} variant="contained" color="primary" fullWidth>
+            Play
+          </Button>
+        </Link>
+        <Link to="/leaderboard">
+          <Button className={classes.button} variant="contained" color="primary" fullWidth>
+            Leaderboard
+          </Button>
+        </Link>
+        <Link to="/howtoplay">
+          <Button className={classes.button} variant="contained" color="primary" fullWidth>
+            How to play
+          </Button>
+        </Link>
+        <Link to="/">
+          <Button className={classes.button} variant="contained" color="primary" fullWidth>
+            Exit/LogOut
+          </Button>
+        </Link>
       </Container>
     </motion.div>
   );

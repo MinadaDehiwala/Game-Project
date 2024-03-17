@@ -14,6 +14,8 @@ import HowToPlay from './components/HowToPlay';
 
 
 
+
+
 function App() {
   return (
     <BrowserRouter>
@@ -25,7 +27,6 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="/howtoplay" element={<HowToPlay />} />
-
           <Route path="/" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>

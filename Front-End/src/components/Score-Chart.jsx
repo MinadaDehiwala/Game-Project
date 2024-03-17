@@ -1,9 +1,35 @@
-// Score-Chart.jsx
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Card, Table } from 'react-bootstrap';
+import { Button, Container, Card, CardContent, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'start',
+    paddingTop: '3vh',
+  },
+  card: {
+    width: '80%',
+    maxWidth: '800px',
+    borderRadius: '15px',
+    padding: '20px',
+    marginTop: theme.spacing(4),
+  },
+  title: {
+    fontSize: '2.5rem',
+    marginBottom: '2.25rem',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  button: {
+    marginTop: theme.spacing(2),
+    fontSize: '1.2rem',
+  },
+}));
 
 const Leaderboard = () => {
+  const classes = useStyles();
   const [leaderboardData, setLeaderboardData] = useState([]);
 
   useEffect(() => {
@@ -25,32 +51,38 @@ const Leaderboard = () => {
   };
 
   return (
-    <Container fluid className='d-flex align-items-start justify-content-center p-6' style={{ paddingTop: '3vh' }}>
-      <Card className='m-5' style={{ width: '80%', maxWidth: '800px', borderRadius: '15px', padding: '20px' }}>
-        <Card.Body className='px-5'>
-          <h1 className="leaderboard-title text-center">Leaderboard</h1>
-          <Table>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Player Name</th>
-                <th>Score</th>
-              </tr>
-            </thead>
-            <tbody>
-              {leaderboardData.map((player, index) => (
-                <tr key={index}>
-                  <th>{index + 1}</th>
-                  <td>{player.name}</td>
-                  <td>{player.score}</td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+    <Container className={classes.root}>
+      <Card className={classes.card}>
+        <CardContent>
+          <h1 className={classes.title}>Leaderboard</h1>
+          <TableContainer component={Paper}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>#</TableCell>
+                  <TableCell>Player Name</TableCell>
+                  <TableCell>Score</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {leaderboardData.map((player, index) => (
+                  <TableRow key={index}>
+                    <TableCell>{index + 1}</TableCell>
+                    <TableCell>{player.name}</TableCell>
+                    <TableCell>{player.score}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
           <div className="text-center">
-            <Link to="/menu" className="btn btn-primary mt-3">Back to Main Menu</Link>
+            <Link to="/menu">
+              <Button variant="contained" color="primary" className={classes.button}>
+                Back to Main Menu
+              </Button>
+            </Link>
           </div>
-        </Card.Body>
+        </CardContent>
       </Card>
     </Container>
   );

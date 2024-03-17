@@ -1,9 +1,44 @@
-// profile.jsx
 import React, { useState, useEffect } from 'react';
-import { Container, Card, Button, Modal } from 'react-bootstrap';
+import { Container, Card, CardContent, Button, Modal, makeStyles } from '@material-ui/core';
 import { motion } from 'framer-motion';
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '60vh',
+    marginLeft: '52vh',
+  },
+  card: {
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    borderRadius: '15px',
+    padding: '20px',
+    maxWidth: '600px',
+    width: '100%',
+  },
+  title: {
+    fontSize: '2.5rem',
+    marginBottom: '2.25rem',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  label: {
+    fontSize: '1.5rem',
+    marginBottom: theme.spacing(1),
+  },
+  value: {
+    fontSize: '1.5rem',
+  },
+  button: {
+    marginTop: theme.spacing(2),
+    marginRight: theme.spacing(2),
+    fontSize: '1.2rem',
+  },
+}));
+
 const Profile = () => {
+  const classes = useStyles();
   const [profileData, setProfileData] = useState(null);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
@@ -54,54 +89,77 @@ const Profile = () => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
-      className="login template d-flex justify-content-center align-items-center"
-      style={{ width: '100%', display: 'flex', justifyContent: 'center', marginLeft: '52vh' }}
+      className={classes.root}
     >
       <Container fluid>
-        <Card className="m-5" style={{ width: '100%', maxWidth: '600px', backgroundColor: 'rgba(255, 255, 255, 0.8)', borderRadius: '15px', padding: '20px' }}>
-          <Card.Body>
-            <h2 className="text-center mb-4" style={{ fontSize: '2.5rem' }}>Profile</h2>
+        <Card className={classes.card}>
+          <CardContent>
+            <h2 className={classes.title}>Profile</h2>
             {profileData && (
               <>
                 <div className="mb-4">
-                  <label htmlFor="name" className="form-label" style={{ fontSize: '1.5rem' }}>Name:</label>
-                  <span className="profile-value" style={{ fontSize: '1.5rem' }}>{profileData.name}</span>
+                  <label htmlFor="name" className={classes.label}>Name:</label>
+                  <span className={classes.value}>{profileData.name}</span>
                 </div>
                 <div className="mb-4">
-                  <label htmlFor="email" className="form-label" style={{ fontSize: '1.5em' }}>Email:</label>
-                  <span className="profile-value" style={{ fontSize: '1.25rem' }}>{profileData.email}</span>
+                  <label htmlFor="email" className={classes.label}>Email:</label>
+                  <span className={classes.value}>{profileData.email}</span>
                 </div>
                 <div className="mb-4">
-                  <label className="form-label" style={{ fontSize: '1.5rem' }}>Score:</label>
-                  <span className="profile-value" style={{ fontSize: '1.5rem' }}>{profileData.score}</span>
+                  <label className={classes.label}>Score:</label>
+                  <span className={classes.value}>{profileData.score}</span>
                 </div>
               </>
             )}
             <div className="text-center">
-              <Button variant="primary" className="mt-3" onClick={() => window.location.href = "/menu"} style={{ fontSize: '1.8rem' }}>
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.button}
+                onClick={() => window.location.href = "/menu"}
+              >
                 Main Menu
               </Button>
-              <Button variant="danger" className="mt-3 ms-3" onClick={toggleConfirmationModal} style={{ fontSize: '1.8rem' }}>
+              <Button
+                variant="contained"
+                color="secondary"
+                className={classes.button}
+                onClick={toggleConfirmationModal}
+              >
                 Delete Profile
               </Button>
             </div>
-          </Card.Body>
+          </CardContent>
         </Card>
       </Container>
 
-      <Modal show={showConfirmationModal} onHide={toggleConfirmationModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Confirm Profile Deletion</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Are you sure you want to delete your profile?</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={toggleConfirmationModal}>
-            Cancel
-          </Button>
-          <Button variant="danger" onClick={handleDeleteProfile}>
-            Delete
-          </Button>
-        </Modal.Footer>
+      <Modal open={showConfirmationModal} onClose={toggleConfirmationModal}>
+        <Container maxWidth="sm">
+          <Card>
+            <CardContent>
+              <h2 className={classes.title}>Confirm Profile Deletion</h2>
+              <p>Are you sure you want to delete your profile?</p>
+              <div className="text-center">
+                <Button
+                  variant="contained"
+                  color="default"
+                  className={classes.button}
+                  onClick={toggleConfirmationModal}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  className={classes.button}
+                  onClick={handleDeleteProfile}
+                >
+                  Delete
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </Container>
       </Modal>
     </motion.div>
   );

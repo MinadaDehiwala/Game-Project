@@ -1,4 +1,4 @@
-// server.js
+// server.js (no changes required)
 const express = require('express');
 const app = express();
 const cors = require('cors');
@@ -6,6 +6,8 @@ const sqlite3 = require('sqlite3').verbose();
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 const { generateTokens, checkTokenValidity } = require("./Middleware/JWT");
+
+// ... (rest of the code remains the same)
 
 app.use(cors({
     origin: 'http://localhost:5173',
@@ -52,19 +54,46 @@ app.post('/validatePassword', (req, res) => {
 });
 
 app.get('/profile', checkTokenValidity, (req, res) => {
-    const email = req.email;
+  const email = req.email;
 
-    db.get(`SELECT name, email, score FROM users WHERE email = ?`, [email], (err, row) => {
-        if (err) {
-            console.error(err.message);
-            res.status(500).json({ error: 'Error fetching user profile' });
-        } else if (!row) {
-            res.status(404).json({ error: 'User not found' });
-        } else {
-            res.json(row);
-        }
-    });
+  db.get(`SELECT name, email, score FROM users WHERE email = ?`, [email], (err, row) => {
+    if (err) {
+      console.error(err.message);
+      res.status(500).json({ error: 'Error fetching user profile' });
+    } else if (!row) {
+      res.status(404).json({ error: 'User not found' });
+    } else {
+      res.json(row);
+    }
+  });
 });
+
+app.put('/profile/score', checkTokenValidity, (req, res) => {
+    const { email, score } = req.body;
+  
+    db.get('SELECT score FROM users WHERE email = ?', [email], (err, row) => {
+      if (err) {
+        console.error(err.message);
+        res.status(500).json({ error: 'Error fetching user score' });
+      } else if (!row) {
+        res.status(404).json({ error: 'User not found' });
+      } else {
+        const existingScore = row.score;
+        if (score > existingScore) {
+          db.run('UPDATE users SET score = ? WHERE email = ?', [score, email], (err) => {
+            if (err) {
+              console.error(err.message);
+              res.status(500).json({ error: 'Error updating score' });
+            } else {
+              res.json({ message: 'Score updated successfully' });
+            }
+          });
+        } else {
+          res.json({ message: 'Score not updated as it is lower than the existing score' });
+        }
+      }
+    });
+  });
 
 app.get('/profile/name', checkTokenValidity, (req, res) => {
     const email = req.email;

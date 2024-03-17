@@ -31,10 +31,40 @@ const Game = () => {
   const countdownRef = useRef(null);
   const playerRef = useRef(null);
 
+  const updateHighestScore = async () => {
+    try {
+      const response = await axios.get("http://localhost:3000/profile", {
+        withCredentials: true,
+      });
+
+      if (response.status === 200) {
+        const { email, score: existingScore } = response.data;
+
+        if (score > existingScore) {
+          const updateResponse = await axios.put(
+            "http://localhost:3000/profile/score",
+            { email, score },
+            { withCredentials: true }
+          );
+
+          if (updateResponse.status === 200) {
+            console.log("Score updated successfully!");
+          } else {
+            console.error("Failed to update score.");
+          }
+        }
+      } else {
+        console.error("Failed to fetch user profile.");
+      }
+    } catch (error) {
+      console.error("Error updating score:", error);
+    }
+  };
+
   const handleLevelComplete = async () => {
     try {
       setShowConfetti(true);
-      setTimeout(() => setShowConfetti(false), 5000); // Hide confetti after 5 seconds
+      setTimeout(() => setShowConfetti(false), 5000);
 
       if (level === 10) {
         const result = await Swal.fire({
@@ -46,9 +76,10 @@ const Game = () => {
         });
 
         if (result.isConfirmed) {
-          window.location.href = "/menu"; // Redirect to main menu
+          window.location.href = "/menu";
         }
-        setGameCompleted(true); // Set game completion flag
+        setGameCompleted(true);
+        await updateHighestScore(); // Update the highest score after completing the game
       } else {
         const result = await Swal.fire({
           title: "Level Complete!",
@@ -57,10 +88,12 @@ const Game = () => {
           confirmButtonColor: "#3085d6",
           confirmButtonText: "Next Level",
         });
-
+  
         if (result.isConfirmed) {
           setLevel(level + 1);
-          setScore(score + calculateScore());
+          const newScore = score + calculateScore();
+          setScore(newScore);
+          await updateHighestScore(); // Update the highest score after completing a level
         }
       }
     } catch (error) {
@@ -158,27 +191,28 @@ const Game = () => {
     }
   };
 
- const handleWrongAnswer = async () => {
-  try {
-    const result = await Swal.fire({
-      title: "Oops...",
-      text: "Incorrect answer. Try again from Level 1.",
-      icon: "error",
-      confirmButtonColor: "#3085d6",
-      confirmButtonText: "Try Again",
-    });
-
-    if (result.isConfirmed) {
-      setLevel(1);
-      setScore(0);
-      setShowSadRain(true);
-      setTimeout(() => setShowSadRain(false), 5000); // Hide sad rain after 5 seconds
-      fetchQuestion(); // Fetch a new question for level 1
+  const handleWrongAnswer = async () => {
+    try {
+      const result = await Swal.fire({
+        title: "Oops...",
+        text: "Incorrect answer. Try again from Level 1.",
+        icon: "error",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Try Again",
+      });
+  
+      if (result.isConfirmed) {
+        setLevel(1);
+        await updateHighestScore(); // Update the highest score before resetting the score
+        setScore(0);
+        setShowSadRain(true);
+        setTimeout(() => setShowSadRain(false), 5000); // Hide sad rain after 5 seconds
+        fetchQuestion(); // Fetch a new question for level 1
+      }
+    } catch (error) {
+      console.error("Error displaying SweetAlert2:", error);
     }
-  } catch (error) {
-    console.error("Error displaying SweetAlert2:", error);
-  }
-};
+  };
 
 
   const calculateScore = () => {
