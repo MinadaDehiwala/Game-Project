@@ -7,7 +7,7 @@ import {
   MDBInput,
   MDBSpinner,
   MDBBtn,
-  
+
 } from "mdb-react-ui-kit";
 import axios from "axios";
 import ReactConfetti from "react-confetti";
@@ -38,7 +38,7 @@ const Game = () => {
       return response.data;
     } catch (error) {
       console.error("Error fetching number fact:", error);
-      return "Failed to fetch number fact.";
+      return "Wait a Minute...This is not a Number!";
     }
   };
 
@@ -79,50 +79,51 @@ const Game = () => {
   };
 
   const handleLevelComplete = async () => {
-  try {
-    setShowConfetti(true);
-    setTimeout(() => setShowConfetti(false), 5000);
+    try {
+      setShowConfetti(true);
+      setTimeout(() => setShowConfetti(false), 5000);
 
-    if (level === 10) {
-      const numberFact = await fetchNumberFact(10); // Fetch fact for number 10
-      const result = await Swal.fire({
-        title: "Congratulations!",
-        text: "You have completed the game!",
-        html: `<p>Number Fact: ${numberFact}</p>`, // Display the fact in the popup
-        icon: "success",
-        confirmButtonColor: "#3085d6",
-        confirmButtonText: "Main Menu",
-        allowOutsideClick: false,
-      });
+      if (level === 10) {
+        const numberFact = await fetchNumberFact(10); // Fetch fact for number 10
+        const result = await Swal.fire({
+          title: "Congratulations!",
+          text: "You have completed the game!",
+          html: `<p><strong>Did you know? </strong>  ${numberFact}</p>`, // Display the fact in the popup
+          icon: "success",
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "Main Menu",
+          allowOutsideClick: false,
+        });
 
-      if (result.isConfirmed) {
-        window.location.href = "/menu";
-      }
-      setGameCompleted(true);
-      await updateHighestScore();
-    } else {
-      const numberFact = await fetchNumberFact(level + 1); // Fetch fact for next level
-      const result = await Swal.fire({
-        title: "Level Complete!",
-        text: "Proceed to the next level?",
-        html: `<p>Number Fact: ${numberFact}</p>`, // Display the fact in the popup
-        icon: "success",
-        confirmButtonColor: "#3085d6",
-        confirmButtonText: "Next Level",
-        allowOutsideClick: false,
-      });
-
-      if (result.isConfirmed) {
-        setLevel(level + 1);
-        const newScore = score + calculateScore();
-        setScore(newScore);
+        if (result.isConfirmed) {
+          window.location.href = "/menu";
+          setAnswer('');
+        }
+        setGameCompleted(true);
         await updateHighestScore();
+      } else {
+        const numberFact = await fetchNumberFact(level + 1); // Fetch fact for next level
+        const result = await Swal.fire({
+          title: "Level Complete!",
+          text: "Proceed to the next level?",
+          html: `<p><strong>Did you know? </strong> ${numberFact}</p>`, // Display the fact in the popup
+          icon: "success",
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "Next Level",
+          allowOutsideClick: false,
+        });
+
+        if (result.isConfirmed) {
+          setLevel(level + 1);
+          const newScore = score + calculateScore();
+          setScore(newScore);
+          await updateHighestScore();
+        }
       }
+    } catch (error) {
+      console.error("Error displaying SweetAlert2:", error);
     }
-  } catch (error) {
-    console.error("Error displaying SweetAlert2:", error);
-  }
-};
+  };
 
   useEffect(() => {
     fetchQuestion();
@@ -137,7 +138,7 @@ const Game = () => {
   const fetchQuestion = () => {
     setLoading(true); // Set loading to true before fetching the question
     axios
-      .get("https://marcconrad.com/uob/tomato/api.php")
+      .get("https://marcconrad.com/uob/tomato/api.php") // Import the URL
       .then((response) => {
         const { question, solution } = response.data;
         setImageURL(question);
@@ -191,7 +192,7 @@ const Game = () => {
     }
     clearInterval(countdownRef.current); // Clear the interval when the user submits an answer
   };
-  
+
 
   const handleTimeOut = async () => {
     try {
@@ -199,13 +200,13 @@ const Game = () => {
       const result = await Swal.fire({
         title: "Time's Up!",
         text: "You ran out of time. Try again from Level 1.",
-        html: `<p>Number Fact: ${numberFact}</p>`, // Display the fact in the popup
+        html: `<p><strong>Did you know? </strong> ${numberFact}</p>`, // Display the fact in the popup
         icon: "error",
         confirmButtonColor: "#3085d6",
         confirmButtonText: "Try Again",
         allowOutsideClick: false,
       });
-  
+
       if (result.isConfirmed) {
         setLevel(1);
         setScore(0);
@@ -223,13 +224,13 @@ const Game = () => {
       const result = await Swal.fire({
         title: "Oops...",
         text: "Incorrect answer. Try again from Level 1.",
-        html: `<p>Number Fact: ${numberFact}</p>`, // Display the fact in the popup
+        html: `<p><strong>Did you know? </strong> ${numberFact}</p>`, // Display the fact in the popup
         icon: "error",
         confirmButtonColor: "#3085d6",
         confirmButtonText: "Try Again",
         allowOutsideClick: false,
       });
-  
+
       if (result.isConfirmed) {
         setLevel(1);
         await updateHighestScore();
@@ -306,12 +307,12 @@ const Game = () => {
             <div className="d-flex justify-content-between align-items-center mb-3">
               <h1 className="level text-center">Level {level}</h1>
               <Button
-  variant="outline-secondary"
-  onClick={toggleMute}
-  style={{ fontSize: "1.2rem" }}
->
-  {isMuted ? "Unmute Sounds" : "Mute Sounds"}
-</Button>
+                variant="outline-secondary"
+                onClick={toggleMute}
+                style={{ fontSize: "1.2rem" }}
+              >
+                {isMuted ? "Unmute Sounds" : "Mute Sounds"}
+              </Button>
             </div>
             <div
               className="timer"
@@ -330,32 +331,37 @@ const Game = () => {
                 marginBottom: "20px",
               }}
             />
-            <div className="mb-4 d-flex align-items-center justify-content-center">
-              <label
-                htmlFor="answer"
-                className="form-label"
-                style={{ fontSize: "1.5rem", marginBottom: "25px" }}
-              >
-                Answer:
-              </label>
-              <MDBInput
-                wrapperClass="mb-4"
-                size="lg"
-                id="answer"
-                type="text"
-                value={answer}
-                onChange={(e) => setAnswer(e.target.value)}
-                style={{ marginLeft: "10px", marginRight: "10px" }}
-              />
-              <button
-                type="submit"
-                className="btn btn-success bg-green-500 w-40"
-                style={{ marginLeft: "25px", marginBottom: "20px" }}
-                onClick={handleSubmit}
-              >
-                Submit
-              </button>
-            </div>
+<div className="mb-4 d-flex align-items-center justify-content-center">
+  <label
+    htmlFor="answer"
+    className="form-label"
+    style={{ fontSize: "1.5rem", marginBottom: "25px" }}
+  >
+    Answer:
+  </label>
+  <MDBInput
+    wrapperClass="mb-4"
+    size="lg"
+    id="answer"
+    type="text"
+    value={answer}
+    onChange={(e) => setAnswer(e.target.value)}
+    onKeyDown={(e) => {
+      if (e.key === 'Enter') {
+        handleSubmit(e);
+      }
+    }}
+    style={{ marginLeft: "10px", marginRight: "10px" }}
+  />
+  <button
+    type="submit"
+    className="btn btn-success bg-green-500 w-40"
+    style={{ marginLeft: "25px", marginBottom: "20px" }}
+    onClick={handleSubmit}
+  >
+    Submit
+  </button>
+</div>
             {message && <div className="message">{message}</div>}
             <select
               className="form-select mt-3"

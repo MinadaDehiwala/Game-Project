@@ -1,4 +1,4 @@
-// server.js (no changes required)
+// server.js 
 const express = require('express');
 const app = express();
 const cors = require('cors');
@@ -7,7 +7,6 @@ const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 const { generateTokens, checkTokenValidity } = require("./Middleware/JWT");
 
-// ... (rest of the code remains the same)
 
 app.use(cors({
     origin: 'http://localhost:5173',
@@ -135,7 +134,6 @@ app.delete('/profile', checkTokenValidity, (req, res) => {
     });
 });
 
-// server.js
 app.post('/signup', (req, res) => {
     const { name, email, password } = req.body;
   

@@ -70,9 +70,23 @@ function Signup() {
               <MDBInput wrapperClass='mb-4' size='lg' id='password' type='password' placeholder="Password" name="password" value={formData.password} onChange={handleChange}/>
             </div>
             <div className="mb-4">
-              <label htmlFor="confirmPassword" className="form-label" style={{ fontSize: '1.5rem' }}>Confirm Password</label>
-              <MDBInput wrapperClass='mb-4' size='lg' id='confirmPassword' type='password' placeholder="Confirm Password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange}/>
-            </div>
+  <label htmlFor="confirmPassword" className="form-label" style={{ fontSize: '1.5rem' }}>Confirm Password</label>
+  <MDBInput
+    wrapperClass='mb-4'
+    size='lg'
+    id='confirmPassword'
+    type='password'
+    placeholder="Confirm Password"
+    name="confirmPassword"
+    value={formData.confirmPassword}
+    onChange={handleChange}
+    onKeyDown={(e) => {
+      if (e.key === 'Enter') {
+        handleSignup();
+      }
+    }}
+  />
+</div>
     
             <button type="button" className="btn btn-success w-100" onClick={handleSignup}>Sign Up</button>
             <p className="text-center mt-3 mb-0">Already have an account? <Link to="/">Login</Link></p>

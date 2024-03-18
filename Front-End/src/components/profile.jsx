@@ -98,15 +98,15 @@ const Profile = () => {
             {profileData && (
               <>
                 <div className="mb-4">
-                  <label htmlFor="name" className={classes.label}>Name:</label>
-                  <span className={classes.value}>{profileData.name}</span>
+                  <label htmlFor="name" className={classes.label}>Name:  </label>
+                  <span className={classes.value}>{    profileData.name}</span>
                 </div>
                 <div className="mb-4">
-                  <label htmlFor="email" className={classes.label}>Email:</label>
+                  <label htmlFor="email" className={classes.label}>Email:  </label>
                   <span className={classes.value}>{profileData.email}</span>
                 </div>
                 <div className="mb-4">
-                  <label className={classes.label}>Score:</label>
+                  <label className={classes.label}>Score:  </label>
                   <span className={classes.value}>{profileData.score}</span>
                 </div>
               </>
