@@ -1,6 +1,0 @@
-Future Components to make before submission
-
-- Login/ SignUp via Google
-- MFA using figerprint/SMS/Email
-- Save progress on AWS cloud
-- 
