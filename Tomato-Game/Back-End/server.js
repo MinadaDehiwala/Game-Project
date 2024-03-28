@@ -5,6 +5,12 @@ const sqlite3 = require('sqlite3').verbose();
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 const { checkTokenValidity } = require("./Middleware/JWT");
+const userRoutes = require('./Routes/userRoutes');
+const leaderboardRoutes = require('./Routes/leaderboardRoutes');
+
+// ... other code
+
+
 
 app.use(cors({
     origin: 'http://localhost:5173',
@@ -37,6 +43,7 @@ let db = new sqlite3.Database('database.db', (err) => {
 
 app.use('/api/users', userRoutes);
 app.use('/api/leaderboard', leaderboardRoutes);
+
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
