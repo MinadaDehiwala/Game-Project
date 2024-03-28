@@ -12,6 +12,8 @@ import ReactConfetti from "react-confetti";
 import Swal from "sweetalert2";
 import YouTube from "react-youtube";
 import Button from 'react-bootstrap/Button';
+import { useNavigate } from 'react-router-dom';
+
 
 const Game = () => {
   const [level, setLevel] = useState(1);
@@ -28,6 +30,11 @@ const Game = () => {
   const [isMuted, setIsMuted] = useState(false);
   const countdownRef = useRef(null);
   const playerRef = useRef(null);
+  const navigate = useNavigate();
+
+  const handleMainMenuClick = () => {
+    navigate('/menu');
+  };
 
   const fetchNumberFact = async (number) => {
     try {
@@ -323,12 +330,9 @@ const Game = () => {
                 </option>
               ))}
             </select>
-            <button
-              className="btn btn-primary mt-3"
-              onClick={() => window.location.href = "/menu"}
-            >
-              Main Menu
-            </button>
+            <button className="btn btn-primary mt-3" onClick={handleMainMenuClick}>
+        Main Menu
+      </button>
           </MDBCardBody>
         </MDBCard>
         {loading && (

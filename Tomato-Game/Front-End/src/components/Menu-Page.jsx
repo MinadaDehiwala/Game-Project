@@ -69,7 +69,7 @@ function Menu() {
   };
 
   const handleMoonClick = () => {
-    navigate('Tomato-Game/Front-End/src/components/Games/Third-Party Game/index.html');
+    navigate('/game2');
   };
 
   const handleLogout = async () => {

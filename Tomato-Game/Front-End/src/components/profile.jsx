@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Card, CardContent, Button, Modal, makeStyles } from '@material-ui/core';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,7 +38,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 const Profile = () => {
+  const navigate = useNavigate();
   const classes = useStyles();
   const [profileData, setProfileData] = useState(null);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
@@ -46,6 +49,10 @@ const Profile = () => {
     fetchProfileData();
   }, []);
 
+  const handleMainMenuClick = () => {
+    navigate('/menu');
+  };
+  
   const fetchProfileData = async () => {
     try {
       const response = await fetch('http://localhost:3000/profile', {
@@ -111,24 +118,14 @@ const Profile = () => {
                 </div>
               </>
             )}
-            <div className="text-center">
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.button}
-                onClick={() => window.location.href = "/menu"}
-              >
-                Main Menu
-              </Button>
-              <Button
-                variant="contained"
-                color="secondary"
-                className={classes.button}
-                onClick={toggleConfirmationModal}
-              >
-                Delete Profile
-              </Button>
-            </div>
+          <div className="text-center">
+  <button className="btn btn-primary mt-3" onClick={handleMainMenuClick}>
+    Main Menu
+  </button>
+  <button className="btn btn-danger mt-3 ms-3" onClick={toggleConfirmationModal}>
+    Delete Profile
+  </button>
+</div>
           </CardContent>
         </Card>
       </Container>
