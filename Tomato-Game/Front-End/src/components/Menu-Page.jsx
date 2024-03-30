@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Container, Button, makeStyles } from '@material-ui/core';
 import styled from 'styled-components';
 import axios from 'axios'; // Import axios
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -37,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
 function Menu() {
   const classes = useStyles();
   const [userName, setUserName] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchUserName();
@@ -44,11 +46,17 @@ function Menu() {
   }, []);
 
   const fetchUserName = async () => {
+    const accessToken = localStorage.getItem('access-token');
+  
     try {
       const response = await fetch('http://localhost:3000/profile/name', {
         method: 'GET',
         credentials: 'include',
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        }
       });
+  
       if (response.ok) {
         const data = await response.json();
         setUserName(data.name);
@@ -60,7 +68,9 @@ function Menu() {
     }
   };
 
-
+  const handleMoonClick = () => {
+    navigate('/game2');
+  };
 
   const handleLogout = async () => {
     try {
@@ -122,7 +132,18 @@ function Menu() {
       </Button>
     </Link>
       </Container>
-    
+      <div
+        onClick={handleMoonClick}
+        style={{
+          position: 'absolute',
+          bottom: '58px', // Adjust the position to match the Easter egg's location
+          right: '44px',
+          width: '35px', // Adjust the width and height to create a small area around the Easter egg
+          height: '43px',
+          cursor: 'pointer',
+          borderRadius: '50%',
+        }}
+      />
     </motion.div>
   );
 }

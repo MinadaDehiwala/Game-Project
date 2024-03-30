@@ -1,8 +1,16 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { MDBContainer, MDBCard, MDBCardBody } from 'mdb-react-ui-kit';
+import { useNavigate } from 'react-router-dom';
+
+
+ 
 
 const HowToPlay = () => {
+  const navigate = useNavigate();
+  const handleMainMenuClick = () => {
+    navigate('/menu');
+  };
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -45,7 +53,9 @@ const HowToPlay = () => {
                 <p>To return to the main menu, click the "Main Menu" button at the bottom of the game screen.</p>
               </li>
             </ol>
-            <button className="btn btn-primary mt-3" onClick={() => window.location.href = "/menu"}>Main Menu</button>
+            <button className="btn btn-primary mt-3" onClick={handleMainMenuClick}>
+        Main Menu
+      </button>
           </MDBCardBody>
         </MDBCard>
       </MDBContainer>
