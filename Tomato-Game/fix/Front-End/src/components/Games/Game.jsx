@@ -31,7 +31,7 @@ const Game = () => {
   const countdownRef = useRef(null);
   const playerRef = useRef(null);
 
-  const updateHighestScore = async () => {
+  const updateHighestScore = async (currentScore) => {
     try {
       const response = await axios.get("http://localhost:3000/profile", {
         withCredentials: true,
@@ -42,12 +42,12 @@ const Game = () => {
       });
   
       if (response.status === 200) {
-        const { email, score: existingScore } = response.data;
-  
-        if (score > existingScore) {
+        const { email, score } = response.data;
+        if (score < currentScore) {
+          console.log(score,currentScore); 
           const updateResponse = await axios.put(
             "http://localhost:3000/profile/score",
-            { email, score },
+            { email, currentScore },
             {
               withCredentials: true,
               headers: {
@@ -56,6 +56,7 @@ const Game = () => {
               },
             }
           );
+          console.log(updateResponse)
   
           if (updateResponse.status === 200) {
             console.log("Score updated successfully!");
@@ -89,7 +90,7 @@ const Game = () => {
           window.location.href = "/menu";
         }
         setGameCompleted(true);
-        await updateHighestScore(); // Update the highest score after completing the game
+        await updateHighestScore(calculateScore()); // Update the highest score after completing the game
       } else {
         const result = await Swal.fire({
           title: "Level Complete!",
@@ -103,7 +104,7 @@ const Game = () => {
           setLevel(level + 1);
           const newScore = score + calculateScore();
           setScore(newScore);
-          await updateHighestScore(); // Update the highest score after completing a level
+          await updateHighestScore(newScore); // Update the highest score after completing a level
         }
       }
     } catch (error) {

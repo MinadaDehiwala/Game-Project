@@ -69,31 +69,34 @@ app.get('/profile', checkTokenValidity, (req, res) => {
 });
 
 app.put('/profile/score', checkTokenValidity, (req, res) => {
-    const { email, score } = req.body;
-  
-    db.get('SELECT score FROM users WHERE email = ?', [email], (err, row) => {
-      if (err) {
-        console.error(err.message);
-        res.status(500).json({ error: 'Error fetching user score' });
-      } else if (!row) {
-        res.status(404).json({ error: 'User not found' });
+  const { email, currentScore } = req.body;
+  console.log(currentScore, email);
+
+  db.get('SELECT score FROM users WHERE email = ?', [email], (err, row) => {
+    if (err) {
+      console.error('Error fetching user score:', err);
+      res.status(500).json({ error: 'Error fetching user score' });
+    } else if (!row) {
+      res.status(404).json({ error: 'User not found' });
+    } else {
+      const existingScore = row.score;
+      console.log(existingScore, currentScore);
+
+      if (currentScore > existingScore) {
+        db.run('UPDATE users SET score = ? WHERE email = ?', [currentScore, email], (err) => {
+          if (err) {
+            console.error('Error updating score:', err);
+            res.status(500).json({ error: 'Error updating score' });
+          } else {
+            res.json({ message: 'Score updated successfully' });
+          }
+        });
       } else {
-        const existingScore = row.score;
-        if (score > existingScore) {
-          db.run('UPDATE users SET score = ? WHERE email = ?', [score, email], (err) => {
-            if (err) {
-              console.error(err.message);
-              res.status(500).json({ error: 'Error updating score' });
-            } else {
-              res.json({ message: 'Score updated successfully' });
-            }
-          });
-        } else {
-          res.json({ message: 'Score not updated as it is lower than the existing score' });
-        }
+        res.json({ message: 'Score not updated as it is lower than the existing score' });
       }
-    });
+    }
   });
+});
 
 app.get('/profile/name', checkTokenValidity, (req, res) => {
     const email = req.email;
