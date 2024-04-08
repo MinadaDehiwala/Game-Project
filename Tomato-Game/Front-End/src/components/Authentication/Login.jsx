@@ -24,7 +24,7 @@ function Login() {
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post('http://localhost:3000/validatePassword', values, { withCredentials: true });
+      const res = await axios.post('http://localhost:3000/api/users/validatePassword', values, { withCredentials: true });
       if (res.data.validation) {
         navigate('/menu'); // Redirect to /menu on successful login
       } else {

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Container, Button, makeStyles } from '@material-ui/core';
-import styled from 'styled-components';
 import axios from 'axios'; // Import axios
 import { useNavigate } from 'react-router-dom';
 
@@ -49,7 +48,7 @@ function Menu() {
     const accessToken = localStorage.getItem('access-token');
   
     try {
-      const response = await fetch('http://localhost:3000/profile/name', {
+      const response = await fetch('http://localhost:3000/api/users/profile/name', {
         method: 'GET',
         credentials: 'include',
         headers: {

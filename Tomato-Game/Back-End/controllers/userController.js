@@ -33,33 +33,32 @@ const getProfile = (req, res) => {
         }
     });
 };
-
 const updateScore = (req, res) => {
-    const { email, score } = req.body;
+    const email = req.query.email;
+    const newScore = req.body.score;
+    console.log('Request body:', req.body);
 
     db.get('SELECT score FROM users WHERE email = ?', [email], (err, row) => {
-        if (err) {
-            console.error(err.message);
-            res.status(500).json({ error: 'Error fetching user score' });
-        } else if (!row) {
-            res.status(404).json({ error: 'User not found' });
-        } else {
-            const existingScore = row.score;
-            if (score > existingScore) {
-                db.run('UPDATE users SET score = ? WHERE email = ?', [score, email], (err) => {
-                    if (err) {
-                        console.error(err.message);
-                        res.status(500).json({ error: 'Error updating score' });
-                    } else {
-                        res.json({ message: 'Score updated successfully' });
-                    }
-                });
+      if (err) {
+        console.error(err.message);
+        res.status(500).json({ error: 'Error fetching user score' });
+      } else if (!row) {
+        res.status(404).json({ error: 'User not found' });
+      } else {
+        const existingScore = row.score;
+  
+        db.run('UPDATE users SET score = ? WHERE email = ?', [newScore, email], (err) => {
+            if (err) {
+              console.error(err.message);
+              res.status(500).json({ error: 'Error updating score' });
             } else {
-                res.json({ message: 'Score not updated as it is lower than the existing score' });
+              res.json({ message: 'Score updated successfully' });
             }
-        }
+          });
+        
+      }
     });
-};
+  };
 
 const getName = (req, res) => {
     const email = req.email;
