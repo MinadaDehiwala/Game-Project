@@ -25,12 +25,12 @@ const Game = () => {
   const [score, setScore] = useState(0);
   const [loading, setLoading] = useState(true);
   const [showConfetti, setShowConfetti] = useState(false);
-  const [showSadRain, setShowSadRain] = useState(false);
   const [gameCompleted, setGameCompleted] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const countdownRef = useRef(null);
   const playerRef = useRef(null);
   const navigate = useNavigate();
+  const [userEmail, setUserEmail] = useState("");
 
   const handleMainMenuClick = () => {
     navigate('/menu');
@@ -45,31 +45,65 @@ const Game = () => {
       return "Wait a Minute...This is not a Number!";
     }
   };
+  const calculateScore = () => {
+    const timeRemaining = timer;
+    const maxScore = 1000;
+    const minScore = 100;
 
+    const score = Math.round(
+      (timeRemaining / (180 - level * 10)) * maxScore + minScore
+    );
+
+    return score;
+  };
   const handleLevelComplete = async () => {
     try {
       setShowConfetti(true);
       setTimeout(() => setShowConfetti(false), 5000);
-
+  
+      const newScore = score + calculateScore(); // Assuming calculateScore() correctly calculates the new score
+      setScore(newScore);
+  
+      // Update the score on the server
+      try {
+        const response = await fetch(`/api/users/profile/score?email=${userEmail}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            score: newScore, // Make sure to send the score in the request body
+          }),
+          credentials: "include", // Include cookies in the request
+        });
+    
+        const data = await response.json();
+        console.log("Score update response:", data);
+      } catch (error) {
+        console.error("Error updating score:", error);
+      }
+    
+  
+      // Level completion logic
       if (level === 10) {
+        // Fetching a number fact for level 10
         const numberFact = await fetchNumberFact(10);
         const result = await Swal.fire({
           title: "Congratulations!",
           text: "You have completed the game!",
-          html: `<p><strong>Did you know? </strong>  ${numberFact}</p>`,
+          html: `<p><strong>Did you know? </strong> ${numberFact}</p>`,
           icon: "success",
           confirmButtonColor: "#3085d6",
           confirmButtonText: "Main Menu",
           allowOutsideClick: false,
         });
-
+  
         if (result.isConfirmed) {
           window.location.href = "/menu";
-          setAnswer('');
         }
         setGameCompleted(true);
-        setAnswer(''); // Clear the answer input field
       } else {
+        // Fetching a number fact for the next level
         const numberFact = await fetchNumberFact(level + 1);
         const result = await Swal.fire({
           title: "Level Complete!",
@@ -79,23 +113,36 @@ const Game = () => {
           confirmButtonColor: "#3085d6",
           confirmButtonText: "Next Level",
           allowOutsideClick: false,
-          
         });
-
+  
         if (result.isConfirmed) {
           setLevel(level + 1);
-          const newScore = score + calculateScore();
-          setScore(newScore);
         }
       }
     } catch (error) {
-      console.error("Error displaying SweetAlert2:", error);
+      console.error("Error handling level completion:", error);
     }
   };
+  
 
   useEffect(() => {
     fetchQuestion();
   }, [level]);
+
+  useEffect(() => {
+    const fetchUserEmail = async () => {
+      try {
+        const response = await axios.get("/api/users/profile/email", {
+          withCredentials: true, // Include cookies in the request
+        });
+        setUserEmail(response.data.email);
+      } catch (error) {
+        console.error("Error fetching user email:", error);
+      }
+    };
+  
+    fetchUserEmail();
+  }, []);
 
   const fetchQuestion = () => {
     setLoading(true);
@@ -204,17 +251,7 @@ const Game = () => {
     }
   };
 
-  const calculateScore = () => {
-    const timeRemaining = timer;
-    const maxScore = 1000;
-    const minScore = 100;
 
-    const score = Math.round(
-      (timeRemaining / (180 - level * 10)) * maxScore + minScore
-    );
-
-    return score;
-  };
 
   const toggleMute = () => {
     setIsMuted(!isMuted);

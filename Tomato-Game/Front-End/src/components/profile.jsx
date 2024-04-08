@@ -55,7 +55,7 @@ const Profile = () => {
   
   const fetchProfileData = async () => {
     try {
-      const response = await fetch('http://localhost:3000/profile', {
+      const response = await fetch('http://localhost:3000/api/users/profile', {
         method: 'GET',
         credentials: 'include',
       });
@@ -72,7 +72,7 @@ const Profile = () => {
 
   const handleDeleteProfile = async () => {
     try {
-      const response = await fetch('http://localhost:3000/profile', {
+      const response = await fetch('http://localhost:3000/api/users/profile', {
         method: 'DELETE',
         credentials: 'include',
       });

@@ -6,28 +6,19 @@ const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 const { checkTokenValidity } = require("./Middleware/JWT");
 const userRoutes = require('./Routes/userRoutes');
+app.use('/api/users', userRoutes);
 const leaderboardRoutes = require('./Routes/leaderboardRoutes');
+app.use('/api/leaderboard', leaderboardRoutes);
 
 // ... other code
 
 
 
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: 'http://localhost:5173', // Update this to the origin of your frontend
     credentials: true
 }));
-app.use((req, res, next) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    next();
-});
 
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    next();
-});
 
 app.use(express.json({ limit: '10mb' }));
 

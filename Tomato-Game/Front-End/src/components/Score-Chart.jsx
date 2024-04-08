@@ -38,7 +38,7 @@ const Leaderboard = () => {
 
   const fetchLeaderboardData = async () => {
     try {
-      const response = await fetch('http://localhost:3000/leaderboard');
+      const response = await fetch('http://localhost:3000/api/leaderboard');
       if (response.ok) {
         const data = await response.json();
         setLeaderboardData(data);
