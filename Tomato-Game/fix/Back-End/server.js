@@ -7,7 +7,6 @@ const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 const { generateTokens, checkTokenValidity } = require("./Middleware/JWT");
 
-// ... (rest of the code remains the same)
 
 app.use(cors({
     origin: 'http://localhost:5173',

@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import axios from 'axios'; // Import axios for making HTTP requests
 import { Modal, Button } from 'react-bootstrap';
 
-
 function Login() {
   const [values, setValues] = useState({ email: '', password: '' }); // Define the values state variable
   const [showErrorModal, setShowErrorModal] = useState(false);
@@ -40,7 +39,7 @@ function Login() {
 
   return (
     <MDBContainer fluid className='d-flex align-items-center justify-content-center' style={{ minHeight: '100vh' }}>
-           <Modal show={showErrorModal} onHide={() => setShowErrorModal(false)}>
+      <Modal show={showErrorModal} onHide={() => setShowErrorModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Login Error</Modal.Title>
         </Modal.Header>
@@ -50,7 +49,7 @@ function Login() {
             Close
           </Button>
         </Modal.Footer>
-      </Modal>  
+      </Modal>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -65,23 +64,23 @@ function Login() {
               <MDBInput wrapperClass='mb-4' size='lg' id='form1' type='email' name='email' value={values.email} onChange={handleChange} placeholder="Enter your email" />
             </div>
             <div className="mb-4">
-  <label htmlFor="password" className="form-label" style={{ fontSize: '1.5rem' }}>Password</label>
-  <MDBInput
-    wrapperClass='mb-4'
-    size='lg'
-    id='form2'
-    type='password'
-    name='password'
-    value={values.password}
-    onChange={handleChange}
-    placeholder="Enter your password"
-    onKeyDown={(e) => {
-      if (e.key === 'Enter') {
-        handleLogin();
-      }
-    }}
-  />
-</div>
+              <label htmlFor="password" className="form-label" style={{ fontSize: '1.5rem' }}>Password</label>
+              <MDBInput
+                wrapperClass='mb-4'
+                size='lg'
+                id='form2'
+                type='password'
+                name='password'
+                value={values.password}
+                onChange={handleChange}
+                placeholder="Enter your password"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleLogin();
+                  }
+                }}
+              />
+            </div>
             <p className="text-center mb-0" style={{ fontSize: '1.125rem' }}>Don't have an account? <Link to="/signup" style={{ fontWeight: 'bold', color: '#000' }}>Sign Up</Link></p>
 
             <div className='d-flex justify-content-between align-items-center mb-4'>
