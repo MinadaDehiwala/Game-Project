@@ -31,6 +31,17 @@ const Game = () => {
   const countdownRef = useRef(null); // Reference for the timer interval
   const playerRef = useRef(null); // Reference for the YouTube player
 
+// Function to fetch a random fact about a number
+  const getNumberFact = async (number) => {
+    try {
+      const response = await axios.get(`http://numbersapi.com/${number}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching number fact:', error);
+      return 'Failed to fetch number fact.';
+    }
+  };
+
   // Function to update the highest score in the backend
   const updateHighestScore = async (currentScore) => {
     try {
@@ -90,38 +101,39 @@ const Game = () => {
   // Function to handle level completion
   const handleLevelComplete = async () => {
     try {
-      setShowConfetti(true);
-      setTimeout(() => setShowConfetti(false), 5000);
-
-      if (level === 10) {
+      setShowConfetti(true); // Show confetti effect
+      setTimeout(() => setShowConfetti(false), 5000); // Show confetti for 5 seconds
+  
+      if (level === 10) { // Check if the game is completed
         const result = await Swal.fire({
           title: level === 10 ? "Congratulations!" : "Level Complete!",
           text: level === 10 ? "You have completed the game!" : "Proceed to the next level?",
           icon: "success",
           confirmButtonColor: "#3085d6",
           confirmButtonText: level === 10 ? "Main Menu" : "Next Level",
-          allowOutsideClick: false, // Prevent dismissal by clicking outside the popup
+          allowOutsideClick: false,
         });
-
+  
         if (result.isConfirmed) {
-          window.location.href = "/menu";
+          window.location.href = "/menu"; // Redirect to the main menu
         }
         setGameCompleted(true);
-        await updateHighestScore(calculateScore()); // Update the highest score after completing the game
+        await updateHighestScore(calculateScore()); // Update the highest score
       } else {
-        const result = await Swal.fire({
+        const numberFact = await getNumberFact(level + 1);
+        const result = await Swal.fire({ // Display a modal with the fact and a message
           title: "Level Complete!",
-          text: "Proceed to the next level?",
+          text: ` Did you know? ${numberFact}\n\nProceed to the next level?`, // Display a random fact about the next level
           icon: "success",
           confirmButtonColor: "#3085d6",
           confirmButtonText: "Next Level",
         });
-
+  
         if (result.isConfirmed) {
-          setLevel(level + 1);
-          const newScore = score + calculateScore();
-          setScore(newScore);
-          await updateHighestScore(newScore); // Update the highest score after completing a level
+          setLevel(level + 1); // Increase the level by 1
+          const newScore = score + calculateScore(); // Calculate the new score
+          setScore(newScore); // Update the score
+          await updateHighestScore(newScore);// Update the highest score
         }
       }
     } catch (error) {
@@ -229,21 +241,22 @@ const Game = () => {
   // Function to handle wrong answer
   const handleWrongAnswer = async () => {
     try {
-      const result = await Swal.fire({
+      const numberFact = await getNumberFact(level); // Fetch a random fact about the current level
+      const result = await Swal.fire({ // Display a modal with the fact and a message
         title: "Oops...",
-        text: "Incorrect answer. Try again from Level 1.",
+        text: `Incorrect answer. Did you Know? ${numberFact}\n\nTry again from Level 1.`,
         icon: "error",
         confirmButtonColor: "#3085d6",
         confirmButtonText: "Try Again",
-        allowOutsideClick: false, // Add this line to prevent dismissal by clicking outside
+        allowOutsideClick: false,
       });
   
+      // Reset the level, score, and fetch a new question
       if (result.isConfirmed) {
         setLevel(1);
-        await updateHighestScore(); // Update the highest score before resetting the score
+        await updateHighestScore();
         setScore(0);
-
-        fetchQuestion(); // Fetch a new question for level 1
+        fetchQuestion();
       }
     } catch (error) {
       console.error("Error displaying SweetAlert2:", error);
